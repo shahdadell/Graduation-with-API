@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/App_Images/app_images.dart';
-import 'package:graduation_project/Home_Screen/UI/home_screen.dart';
 import 'package:graduation_project/Theme/theme.dart';
 import 'package:graduation_project/auth/sign_up_screen/sign_up_screen.dart';
 import 'package:graduation_project/auth/sing_in_screen/sign_in_screen.dart';
+
+import '../Home_Screen/UI/home_screen.dart';
 
 class MainScreen extends StatelessWidget {
   static const String routName = 'LoginScreen';
@@ -22,37 +23,6 @@ class MainScreen extends StatelessWidget {
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: Padding(
-              padding: const EdgeInsets.all(2),
-              child: Container(
-                margin: const EdgeInsets.only(left: 10, right: 10),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(HomeScreen.routName);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0x90f26b0a),
-                    shape: ContinuousRectangleBorder(
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                  ),
-                  child: const Text(
-                    textAlign: TextAlign.center,
-                    "visiting as a guest",
-                    style: TextStyle(
-                        color: Color(0xffFFFFFF),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ),
-            ),
-            leadingWidth: 160,
-          ),
           body: Center(
             child: Padding(
               padding: const EdgeInsets.all(25),
@@ -83,7 +53,7 @@ class MainScreen extends StatelessWidget {
                     child: Text(
                       textAlign: TextAlign.center,
                       "Sign in",
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   Row(
@@ -136,89 +106,46 @@ class MainScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Navigator.of(context)
-                      //     .pushReplacementNamed(HomeScreen.routName);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(11),
-                      backgroundColor: MyTheme.blueColor2,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          AppImages.facebook,
-                          width: 30,
-                          height: 30,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          textAlign: TextAlign.center,
-                          "Continue with FaceBook",
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Navigator.of(context)
-                      //     .pushReplacementNamed(HomeScreen.routName);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(11),
-                      backgroundColor: MyTheme.blackColor,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          AppImages.apple,
-                          width: 30,
-                          height: 30,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          textAlign: TextAlign.center,
-                          "Continue with Apple",
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
+                       Text(
                         "Don't have an account? ",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
+                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                       InkWell(
                         onTap: () {
                           Navigator.of(context)
                               .pushNamed(SignUpScreen.routName);
                         },
-                        child: const Text(
+                        child:  Text(
                           " Sign Up",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Color(0xffe37222),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600),
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
                     ],
                   ),
                   const Spacer(),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(HomeScreen.routName);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0x90f26b0a),
+                      shape: ContinuousRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                    ),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      "visiting as a guest",
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ),
                 ],
               ),
             ),
