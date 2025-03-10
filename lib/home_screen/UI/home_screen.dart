@@ -36,38 +36,103 @@ class _HomeScreenState extends State<HomeScreen> {
                 homeTopBar(),
                 searchField(w),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: horizontalListTitle("Special Offer"),
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    "Special Offer",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15),
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
-                      CarouselSlider.builder(
-                        itemCount: 4,
-                        itemBuilder:
-                            (BuildContext context, int index, int realIndex) {
-                          return carouselSliderImage(AppImages.offerimg);
+                      BlocBuilder<HomeBloc, HomeState>(
+                        builder: (context, state) {
+                          if (state is FetchLoadingHomeDataState) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else if (state is FetchSuccessHomeDataState) {
+                            return CarouselSlider.builder(
+                              itemCount: state.items.length,
+                              itemBuilder: (BuildContext context, int index,
+                                  int realIndex) {
+                                final item = state.items[index];
+                                return Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: Image.network(
+                                        item.itemImage ?? '',
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder:
+                                            (context, child, loadingProgress) {
+                                          if (loadingProgress == null)
+                                            return child;
+                                          return Container(
+                                            color: Colors.grey[300],
+                                            child: const Center(
+                                                child:
+                                                    CircularProgressIndicator()),
+                                          );
+                                        },
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Container(
+                                            color: Colors.grey,
+                                            child: const Icon(
+                                                Icons.broken_image,
+                                                size: 50,
+                                                color: Colors.white),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    if (item.itemDiscount != null &&
+                                        item.itemDiscount != "0")
+                                      Positioned(
+                                        bottom: 8,
+                                        right: 8,
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 5),
+                                          decoration: BoxDecoration(
+                                            color: Colors.red.withOpacity(0.8),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: Text(
+                                            "${item.itemDiscount}% OFF",
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              },
+                              options: CarouselOptions(
+                                initialPage: 1,
+                                viewportFraction: 1,
+                                autoPlay: true,
+                                autoPlayInterval: const Duration(seconds: 5),
+                                autoPlayAnimationDuration:
+                                    const Duration(milliseconds: 1000),
+                                scrollDirection: Axis.horizontal,
+                              ),
+                            );
+                          } else {
+                            return const Center(
+                                child: Text("Error loading images"));
+                          }
                         },
-                        options: CarouselOptions(
-                          initialPage: 0,
-                          viewportFraction: 1,
-                          reverse: false,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 3),
-                          autoPlayAnimationDuration:
-                              const Duration(milliseconds: 800),
-                          scrollDirection: Axis.horizontal,
-                          onPageChanged: (index, reason) {
-                            setState(() {
-                              currentindex = index;
-                            });
-                          },
-                        ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 30),
+                        padding: const EdgeInsets.only(top: 15),
                         child: AnimatedSmoothIndicator(
                           activeIndex: currentindex,
                           count: 4,
@@ -89,50 +154,84 @@ class _HomeScreenState extends State<HomeScreen> {
                     } else if (state is FetchSuccessHomeDataState) {
                       return GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 4),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          mainAxisSpacing: 16,
+                          crossAxisSpacing: 16,
+                          childAspectRatio: 0.9,
+                        ),
                         itemCount: state.categories.length,
                         shrinkWrap: true,
                         itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                            overlayColor:
-                                WidgetStatePropertyAll(MyTheme.transparent),
-                            onTap: () {},
+                          return GestureDetector(
+                            onTap: () {
+                            },
                             child: Column(
                               children: [
-                                ClipRRect(
-                                  child: Image.network(
-                                    state.categories[index].categoriesImage ??
-                                        '',
-                                    width: 48,
-                                    height: 48,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return const Icon(Icons.broken_image,
-                                          size: 48);
-                                    },
+                                Container(
+                                  width: 70,
+                                  height: 70,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: const LinearGradient(
+                                      colors: [Colors.purpleAccent, Colors.deepPurpleAccent],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.15),
+                                        blurRadius: 10,
+                                        spreadRadius: 2,
+                                        offset: const Offset(2, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      state.categories[index].categoriesImage ?? '',
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) {
+                                        return Container(
+                                          color: Colors.grey[300],
+                                          child: const Icon(Icons.broken_image, size: 35, color: Colors.white),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
+                                const SizedBox(height: 6),
                                 Text(
-                                  state.categories[index].categoriesName ??
-                                      'Unknown',
-                                  style: textStyle(
-                                      14, FontWeight.w600, MyTheme.blackColor),
-                                )
+                                  state.categories[index].categoriesName ?? 'Unknown',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: Colors.black87,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ],
                             ),
                           );
                         },
                       );
+
                     } else if (state is HomeErrorState) {
                       return Center(child: Text("Error: ${state.message}"));
                     }
                     return const SizedBox.shrink();
                   },
                 ),
-                horizontalListTitle("Discount guaranteed!"),
-                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text(
+                    "Discount guaranteed!",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                const SizedBox(height: 15),
                 BlocBuilder<HomeBloc, HomeState>(
                   builder: (context, state) {
                     if (state is FetchLoadingHomeDataState) {
@@ -145,7 +244,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             itemCount: state.items.length,
                             itemBuilder: (context, index) {
                               final item = state.items[index];
-
                               return Container(
                                 width: 180,
                                 margin: const EdgeInsets.symmetric(
@@ -181,12 +279,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                               errorBuilder:
                                                   (context, error, stackTrace) {
                                                 return Container(
-                                                  height: 500,
-                                                  color: Colors.grey,
-                                                  child: const Icon(
-                                                      Icons.broken_image,
-                                                      size: 50,
-                                                      color: Colors.white),
+                                                  height: 120,
+                                                  color: Colors.grey[300],
+                                                  child: const Center(
+                                                    child: Icon(
+                                                        Icons.broken_image,
+                                                        size: 50,
+                                                        color: Colors.white),
+                                                  ),
                                                 );
                                               },
                                             ),
@@ -195,23 +295,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                               item.itemDiscount != "0")
                                             Positioned(
                                               top: 8,
-                                              left: 8,
-                                              child: Container(
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 8, vertical: 4),
-                                                decoration: BoxDecoration(
+                                              left: 0,
+                                              child: ClipPath(
+                                                clipper: RibbonClipper(),
+                                                child: Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 4,
+                                                      horizontal: 12),
                                                   color: Colors.redAccent
-                                                      .withOpacity(0.8),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                child: Text(
-                                                  "${item.itemDiscount}% off",
-                                                  style: const TextStyle(
+                                                      .withOpacity(0.9),
+                                                  child: Text(
+                                                    "${item.itemDiscount}% OFF",
+                                                    style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 12,
                                                       fontWeight:
-                                                          FontWeight.bold),
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -227,34 +329,41 @@ class _HomeScreenState extends State<HomeScreen> {
                                               item.itemName ?? 'Unknown',
                                               style: const TextStyle(
                                                   fontSize: 14,
-                                                  fontWeight: FontWeight.w600),
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.black87),
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                             const SizedBox(height: 4),
-                                            Text(
-                                              "Price: ${item.itemPrice ?? 'N/A'} EGP",
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.green),
-                                            ),
-                                            Text(
-                                              "Rating: ⭐ ${item.itemRating ?? 'N/A'}",
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.orangeAccent),
-                                            ),
-                                            Text(
-                                              "📍 ${item.itemLocation ?? 'Unknown'}",
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.blueGrey),
-                                            ),
-                                            Text(
-                                              "📞 ${item.itemPhone ?? 'No Contact'}",
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.blue),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Price: ${item.itemPrice ?? 'N/A'} EGP",
+                                                  style: const TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.green,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    const Icon(Icons.star,
+                                                        size: 14,
+                                                        color: Colors
+                                                            .orangeAccent),
+                                                    Text(
+                                                      item.itemRating ?? 'N/A',
+                                                      style: const TextStyle(
+                                                          fontSize: 12,
+                                                          color:
+                                                              Colors.black54),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
@@ -345,6 +454,22 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+class RibbonClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(size.width - 10, 0);
+    path.lineTo(size.width, size.height / 2);
+    path.lineTo(size.width - 10, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
 
 // import 'package:carousel_slider/carousel_slider.dart';
@@ -458,7 +583,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //             child: Column(
 //               children: [
 //                 Image.network(
-//                   state.categories[index].categoriesImage ?? '', 
+//                   state.categories[index].categoriesImage ?? '',
 //                   width: 48,
 //                   height: 48,
 //                   fit: BoxFit.cover,

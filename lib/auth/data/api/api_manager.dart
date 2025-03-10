@@ -53,28 +53,5 @@ class ApiManager {
 
     return AuthResultEntity.fromJson(jsonDecode(response.body));
   }
-  // try {
-  //   final response = await http.post(
-  //     url,
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: jsonEncode(body),
-  //   );
-  //   return response;
-  // } catch (e) {
-  //   throw Exception('Failed to verify code: $e');
 
-  // static Future<HomeScreen> getSources() async {
-  //   Uri url = Uri.https(
-  //     ApiConstants.baseUrl,
-  //     ApiConstants.sourceApi,
-  //   );
-  //   try{
-  //     var response = await http.get(url);
-  //     var bodyString = response.body;
-  //     var json = jsonDecode(bodyString);
-  //     return HomeScreen.fromJson(json);
-  //   }catch (e){
-  //     throw e ;
-  //   }
-  // }
 }

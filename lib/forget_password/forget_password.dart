@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/App_Images/app_images.dart';
 import 'package:graduation_project/Theme/theme.dart';
 
 class ForgetPassword extends StatelessWidget {
@@ -9,7 +8,7 @@ class ForgetPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 400,
+      height: 250,
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -23,17 +22,16 @@ class ForgetPassword extends StatelessWidget {
               width: 130,
               height: 4,
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
+                  Text(
                     "Forgot Password ? ",
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24),
                   ),
                   SizedBox(height: 10),
-                  Image.asset(AppImages.pass)
                 ],
               ),
             ),

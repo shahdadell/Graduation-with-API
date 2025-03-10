@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyTheme {
   static Color orangeColor = const Color(0xffF87146);
@@ -22,12 +23,18 @@ class MyTheme {
   static ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: whiteColor,
     textTheme: TextTheme(
-      titleSmall: TextStyle(
-          color: whiteColor, fontSize: 18, fontWeight: FontWeight.w500),
-      titleMedium: TextStyle(
-          color: blackColor, fontSize: 24, fontWeight: FontWeight.bold),
-      titleLarge: TextStyle(
-          color: blackColor, fontSize: 16, fontWeight: FontWeight.w500),
+      titleSmall: GoogleFonts.dmSerifDisplay(
+          color: whiteColor, fontSize: 16, fontWeight: FontWeight.bold),
+      titleMedium: GoogleFonts.dmSerifDisplay(
+          color: blackColor, fontSize: 18, fontWeight: FontWeight.bold),
+      titleLarge: GoogleFonts.dmSerifDisplay(
+          color: blackColor, fontSize: 24, fontWeight: FontWeight.w500),
+      bodySmall: GoogleFonts.dmSerifDisplay(
+          color: orangeColor2, fontSize: 16, fontWeight: FontWeight.w500),
+      bodyMedium: GoogleFonts.dmSerifDisplay(
+          color: orangeColor2, fontSize: 12, fontWeight: FontWeight.bold),
+      bodyLarge: GoogleFonts.dmSerifDisplay(
+          color: blackColor, fontSize: 12, fontWeight: FontWeight.bold),
     ),
   );
 }

@@ -110,7 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   Text(
                     "Email Address",
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 5),
                   TextFiledLogin(
@@ -136,7 +136,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   Text(
                     "Password",
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 5),
                   TextFiledLogin(
@@ -163,13 +163,10 @@ class _SignInScreenState extends State<SignInScreen> {
                         onTap: () {
                           showForgetPasswordBottomSheet();
                         },
-                        child: const Text(
+                        child:  Text(
                           "Forget Password ?",
                           textAlign: TextAlign.end,
-                          style: TextStyle(
-                              color: Color(0xffF87146),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600),
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
                     ],
@@ -191,44 +188,41 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                   const SizedBox(height: 50),
+                  const Divider(
+                    indent: 5,
+                    endIndent: 5,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        width: 350,
-                        child: Image.asset(
-                          "assets/images/Separator.png",
+                      Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Text(
+                          "or sign in with",
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
+
                     ],
                   ),
-                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       InkWell(
                         onTap: () {},
-                        child: Image.asset(
-                          AppImages.google,
-                          width: 30,
-                          height: 30,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Image.asset(
-                          AppImages.facebook,
-                          width: 30,
-                          height: 30,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Image.asset(
-                          "assets/images/ButtonApple.png",
-                          width: 33,
-                          height: 33,
+                        child: Material(
+                          elevation: 5, // مقدار الظل
+                          borderRadius: BorderRadius.circular(12), // جعل الحواف دائرية
+                          shadowColor: Colors.black.withOpacity(0.3), // لون الظل
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12), // تأكد من تطابق الحواف
+                            child: Image.asset(
+                              AppImages.google,
+                              width: 50,
+                              height: 50,
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -241,7 +235,6 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
-
   void showForgetPasswordBottomSheet() {
     showModalBottomSheet(
       context: context,
