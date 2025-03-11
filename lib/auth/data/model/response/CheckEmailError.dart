@@ -1,12 +1,12 @@
-/// status : "success"
-/// message : "Account verified successfully."
+/// status : "error"
+/// message : "Email not found."
 
-class OtpResponse {
-  OtpResponse({
-    this.status,
-    this.message,});
+class CheckEmailError {
+  CheckEmailError({
+      this.status, 
+      this.message,});
 
-  OtpResponse.fromJson(dynamic json) {
+  CheckEmailError.fromJson(dynamic json) {
     status = json['status'];
     message = json['message'];
   }

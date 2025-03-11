@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/home_screen/bloc/home_event.dart';
 import 'package:graduation_project/home_screen/bloc/home_state.dart';
+import 'package:graduation_project/home_screen/data/model/services_model_response/service_model.dart';
 import 'package:graduation_project/home_screen/data/repo/home_repo.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
@@ -8,9 +9,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<FetchHomeDataEvent>(fetchHomeData);
     on<FetchCategoriesEvent>(fetchCategories);
     on<FetchDiscountEvent>(fetchDiscountedItems);
+    on<FetchServicesEvent>(fetchServicesByCategory);
   }
 
-  Future<void> fetchHomeData(FetchHomeDataEvent event, Emitter<HomeState> emit) async {
+  Future<void> fetchHomeData(
+      FetchHomeDataEvent event, Emitter<HomeState> emit) async {
     emit(FetchLoadingHomeDataState());
     try {
       final categories = await HomeRepo.fetchCategories();
@@ -21,7 +24,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  Future<void> fetchCategories(FetchCategoriesEvent event, Emitter<HomeState> emit) async {
+  Future<void> fetchCategories(
+      FetchCategoriesEvent event, Emitter<HomeState> emit) async {
     emit(FetchCategoriesLoadingState());
     try {
       final categories = await HomeRepo.fetchCategories();
@@ -31,7 +35,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
-  Future<void> fetchDiscountedItems(FetchDiscountEvent event, Emitter<HomeState> emit) async {
+  Future<void> fetchDiscountedItems(
+      FetchDiscountEvent event, Emitter<HomeState> emit) async {
     emit(FetchDiscountItemsLoadingState());
     try {
       final items = await HomeRepo.fetchDiscountedItems();
@@ -40,4 +45,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeErrorState(message: e.toString()));
     }
   }
+Future<void> fetchServicesByCategory(
+    FetchServicesEvent event, Emitter<HomeState> emit) async {
+  emit(FetchServicesLoadingState());
+  try {
+    final services = await HomeRepo.fetchServicesByCategory(event.categoryId);
+    emit(FetchServicesSuccessState(services: services));
+  } catch (e) {
+    emit(HomeErrorState(message: e.toString()));
+  }
+}
+
 }

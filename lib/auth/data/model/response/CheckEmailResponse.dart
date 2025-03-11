@@ -1,12 +1,12 @@
 /// status : "success"
-/// message : "Account verified successfully."
+/// message : "none"
 
-class OtpResponse {
-  OtpResponse({
-    this.status,
-    this.message,});
+class CheckEmailResponse {
+  CheckEmailResponse({
+      this.status, 
+      this.message,});
 
-  OtpResponse.fromJson(dynamic json) {
+  CheckEmailResponse.fromJson(dynamic json) {
     status = json['status'];
     message = json['message'];
   }

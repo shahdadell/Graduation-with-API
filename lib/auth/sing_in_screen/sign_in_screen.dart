@@ -8,10 +8,10 @@ import 'package:graduation_project/auth/data/api/api_manager.dart';
 import 'package:graduation_project/auth/data/repository/auth_repository/data_source/auth_remote_data_source_impl.dart';
 import 'package:graduation_project/auth/data/repository/auth_repository/repository/auth_repository_impl.dart';
 import 'package:graduation_project/auth/domain/repository/repository/auth_repository_contract.dart';
+import 'package:graduation_project/auth/forget_password/forget_password_bottom_sheet.dart';
 import 'package:graduation_project/auth/sing_in_screen/login_screen_viewmodel.dart';
 import 'package:graduation_project/auth/sing_in_screen/login_state.dart';
 import 'package:graduation_project/auth/sing_in_screen/text_filed_login.dart';
-import 'package:graduation_project/forget_password/forget_password.dart';
 
 import '../../main_screen/main_screen.dart';
 
@@ -142,9 +142,10 @@ class _SignInScreenState extends State<SignInScreen> {
                   TextFiledLogin(
                     controller: viewmodel.passwordController,
                     text: 'Password',
-                    icon: Icons.remove_red_eye,
+                    icon: Icons.lock,
                     type: TextInputType.visiblePassword,
                     action: TextInputAction.done,
+                    password: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Password is required";
@@ -184,7 +185,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Text(
                       textAlign: TextAlign.center,
                       "Sign in",
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ),
                   const SizedBox(height: 50),
@@ -202,7 +203,6 @@ class _SignInScreenState extends State<SignInScreen> {
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
-
                     ],
                   ),
                   Row(
@@ -238,7 +238,7 @@ class _SignInScreenState extends State<SignInScreen> {
   void showForgetPasswordBottomSheet() {
     showModalBottomSheet(
       context: context,
-      builder: (context) => const ForgetPassword(),
+      builder: (context) => const ForgetPasswordBottomSheet(),
     );
   }
 }

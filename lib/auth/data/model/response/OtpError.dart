@@ -1,12 +1,12 @@
-/// status : "success"
-/// message : "Account verified successfully."
+/// status : "error"
+/// message : "Verification code is incorrect."
 
-class OtpResponse {
-  OtpResponse({
-    this.status,
-    this.message,});
+class OtpError {
+  OtpError({
+      this.status, 
+      this.message,});
 
-  OtpResponse.fromJson(dynamic json) {
+  OtpError.fromJson(dynamic json) {
     status = json['status'];
     message = json['message'];
   }
