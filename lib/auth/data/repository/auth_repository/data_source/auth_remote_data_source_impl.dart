@@ -23,9 +23,16 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
+  Future<AuthResultEntity> checkemail(String email) async {
+    var response = await apiManager.checkemail(email);
+    return response;
+//    throw UnimplementedError();
+  }
+
+  @override
   Future<AuthResultEntity> verifyCode(String email, String verifyCode) async {
     var response = await apiManager.verifyCode(
-        email, verifyCode); // ✅ تأكد أن لديك هذه الدالة في apiManager
+        email, verifyCode);
     return response;
   }
 }

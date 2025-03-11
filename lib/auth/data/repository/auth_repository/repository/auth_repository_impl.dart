@@ -15,4 +15,14 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
   Future<AuthResultEntity> login(String password, String email) {
     return remoteDataSource.login(password, email);
   }
+
+  @override
+  Future<AuthResultEntity> checkemail(String email) {
+    return remoteDataSource.checkemail(email);
+  }
+
+  @override
+  Future<AuthResultEntity> verifyCode(String email, String verifyCode) {
+    return remoteDataSource.verifyCode(email ,verifyCode);
+  }
 }

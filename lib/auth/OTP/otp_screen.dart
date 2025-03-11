@@ -31,23 +31,13 @@ class _OtpScreenState extends State<OtpScreen> {
     final String email = ModalRoute.of(context)?.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          onTap: () {
-            Navigator.of(context).pushReplacementNamed(SignUpScreen.routName);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: MyTheme.blackColor,
-              size: 30,
-            ),
-          ),
+        leading: Padding(
+          padding: const EdgeInsets.all(15),
         ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         title: Text(
-          "Enter Otp ",
+          "Otp ",
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
@@ -177,8 +167,9 @@ class _OtpScreenState extends State<OtpScreen> {
                   var response = await apiManager.verifyCode(email,
                       "${otpController1.text}${otpController2.text}${otpController3.text}${otpController4.text}${otpController5.text}");
                   if (response.status == "success") {
-                    Navigator.of(context).pushReplacementNamed(HomeScreen.routName);
-                  }else {
+                    Navigator.of(context)
+                        .pushReplacementNamed(HomeScreen.routName);
+                  } else {
                     print("Failed :=> ${response.message}");
                   }
                 } // otp();

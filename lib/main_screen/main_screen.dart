@@ -53,7 +53,7 @@ class MainScreen extends StatelessWidget {
                     child: Text(
                       textAlign: TextAlign.center,
                       "Sign in",
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.displayMedium,
                     ),
                   ),
                   Row(
@@ -69,7 +69,7 @@ class MainScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(15),
                         child: Text(
                           "or",
-                          style: Theme.of(context).textTheme.titleSmall,
+                          style: Theme.of(context).textTheme.displaySmall,
                         ),
                       ),
                       SizedBox(
@@ -101,7 +101,7 @@ class MainScreen extends StatelessWidget {
                         Text(
                           textAlign: TextAlign.center,
                           "Continue with Google",
-                          style: Theme.of(context).textTheme.titleSmall,
+                          style: Theme.of(context).textTheme.displaySmall,
                         ),
                       ],
                     ),
@@ -113,7 +113,7 @@ class MainScreen extends StatelessWidget {
                        Text(
                         "Don't have an account? ",
                         textAlign: TextAlign.center,
-                         style: Theme.of(context).textTheme.titleSmall,
+                         style: Theme.of(context).textTheme.displaySmall,
                       ),
                       InkWell(
                         onTap: () {
@@ -143,7 +143,7 @@ class MainScreen extends StatelessWidget {
                     child: Text(
                       textAlign: TextAlign.center,
                       "visiting as a guest",
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ),
                 ],

@@ -106,15 +106,14 @@ class SignUpScreenState extends State<SignUpScreen> {
                   Text(
                     "Email Address",
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 5),
-                  TextFiledSingup(
+                  TextFiledSignup(
                     text: 'User name / Email',
                     type: TextInputType.emailAddress,
                     action: TextInputAction.done,
                     icon: Icons.email,
-                    hint: 'Enter Your User Name',
                     controller: viewmodel.emailController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -133,14 +132,13 @@ class SignUpScreenState extends State<SignUpScreen> {
                   Text(
                     "User Name",
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 5),
-                  TextFiledSingup(
+                  TextFiledSignup(
                     controller: viewmodel.userNameController,
                     text: 'User Name',
                     icon: Icons.person,
-                    hint: 'Enter Your User Name',
                     type: TextInputType.name,
                     action: TextInputAction.done,
                     validator: (value) {
@@ -154,14 +152,13 @@ class SignUpScreenState extends State<SignUpScreen> {
                   Text(
                     "Phone Number",
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 5),
-                  TextFiledSingup(
+                  TextFiledSignup(
                     controller: viewmodel.phoneController,
                     text: 'Phone Number',
                     icon: Icons.phone,
-                    hint: 'Enter Your Phone Number',
                     type: TextInputType.phone,
                     action: TextInputAction.done,
                     validator: (value) {
@@ -178,16 +175,16 @@ class SignUpScreenState extends State<SignUpScreen> {
                   Text(
                     "Password",
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 5),
-                  TextFiledSingup(
+                  TextFiledSignup(
                     controller: viewmodel.passwordController,
                     text: 'Password',
-                    icon: Icons.remove_red_eye,
-                    hint: 'Enter Your Password',
+                    icon: Icons.lock,
                     type: TextInputType.visiblePassword,
                     action: TextInputAction.done,
+                    password: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "Password is required";
@@ -198,34 +195,34 @@ class SignUpScreenState extends State<SignUpScreen> {
                       return null;
                     },
                   ),
-                  Row(
-                    // mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Checkbox(
-                        tristate: true,
-                        value: viewmodel.value,
-                        checkColor: MyTheme.whiteColor,
-                        activeColor: MyTheme.orangeColor,
-                        onChanged: (bool? newValue) {
-                          setState(
-                            () {
-                              viewmodel.value = newValue;
-                            },
-                          );
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15),
-                        child: SizedBox(
-                          width: 300,
-                          child: Image.asset(
-                            "assets/images/check.png",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   // mainAxisAlignment: MainAxisAlignment.start,
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Checkbox(
+                  //       tristate: true,
+                  //       value: viewmodel.value,
+                  //       checkColor: MyTheme.whiteColor,
+                  //       activeColor: MyTheme.orangeColor,
+                  //       onChanged: (bool? newValue) {
+                  //         setState(
+                  //           () {
+                  //             viewmodel.value = newValue;
+                  //           },
+                  //         );
+                  //       },
+                  //     ),
+                  //     Padding(
+                  //       padding: const EdgeInsets.only(top: 15),
+                  //       child: SizedBox(
+                  //         width: 300,
+                  //         child: Image.asset(
+                  //           "assets/images/check.png",
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   const SizedBox(height: 15),
                   ElevatedButton(
                     onPressed: () {
@@ -238,7 +235,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                     child: Text(
                       textAlign: TextAlign.center,
                       "Register",
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.displaySmall,
                     ),
                   ),
                   const SizedBox(height: 15),
@@ -260,26 +257,18 @@ class SignUpScreenState extends State<SignUpScreen> {
                     children: [
                       InkWell(
                         onTap: () {},
-                        child: Image.asset(
-                          AppImages.google,
-                          width: 30,
-                          height: 30,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Image.asset(
-                          AppImages.facebook,
-                          width: 30,
-                          height: 30,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Image.asset(
-                          "assets/images/ButtonApple.png",
-                          width: 33,
-                          height: 33,
+                        child: Material(
+                          elevation: 5, // مقدار الظل
+                          borderRadius: BorderRadius.circular(12), // جعل الحواف دائرية
+                          shadowColor: Colors.black.withOpacity(0.3), // لون الظل
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12), // تأكد من تطابق الحواف
+                            child: Image.asset(
+                              AppImages.google,
+                              width: 50,
+                              height: 50,
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -291,232 +280,10 @@ class SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
-    return Scaffold(
-      appBar: AppBar(
-        leading: InkWell(
-          onTap: () {
-            Navigator.of(context).pushReplacementNamed(MainScreen.routName);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: MyTheme.blackColor,
-              size: 30,
-            ),
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          "Sign up",
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
-      body: Form(
-        key: viewmodel.formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(25),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Image.asset(
-                  AppImages.sign,
-                  width: 170,
-                  height: 170,
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  "Email Address",
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 5),
-                TextFiledSingup(
-                  text: 'User name / Email',
-                  type: TextInputType.emailAddress,
-                  action: TextInputAction.done,
-                  icon: Icons.email,
-                  hint: 'Enter Your User Name',
-                  controller: viewmodel.emailController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "E-mail is required";
-                    }
-                    bool emailValid = RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(value);
-                    if (!emailValid) {
-                      return 'PLease Enter Valid Email';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "User Name",
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 5),
-                TextFiledSingup(
-                  controller: viewmodel.userNameController,
-                  text: 'User Name',
-                  icon: Icons.person,
-                  hint: 'Enter Your User Name',
-                  type: TextInputType.name,
-                  action: TextInputAction.done,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "User Name is required";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "Phone Number",
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 5),
-                TextFiledSingup(
-                  controller: viewmodel.phoneController,
-                  text: 'Phone Number',
-                  icon: Icons.phone,
-                  hint: 'Enter Your Phone Number',
-                  type: TextInputType.phone,
-                  action: TextInputAction.done,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Phone Number is required";
-                    }
-                    if (value.length < 11) {
-                      return "Phone Number Should Be At Least 11 Chars";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "Password",
-                  textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 5),
-                TextFiledSingup(
-                  controller: viewmodel.passwordController,
-                  text: 'Password',
-                  icon: Icons.remove_red_eye,
-                  hint: 'Enter Your Password',
-                  type: TextInputType.visiblePassword,
-                  action: TextInputAction.done,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Password is required";
-                    }
-                    if (value.length < 6) {
-                      return "Password Should Be At Least 6 Chars";
-                    }
-                    return null;
-                  },
-                ),
-                Row(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Checkbox(
-                      tristate: true,
-                      value: viewmodel.value,
-                      checkColor: MyTheme.whiteColor,
-                      activeColor: MyTheme.orangeColor,
-                      onChanged: (bool? newValue) {
-                        setState(
-                          () {
-                            viewmodel.value = newValue;
-                          },
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: SizedBox(
-                        width: 300,
-                        child: Image.asset(
-                          "assets/images/check.png",
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 15),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(11),
-                    backgroundColor: MyTheme.orangeColor,
-                  ),
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    "Register",
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 350,
-                      child: Image.asset(
-                        "assets/images/Separator2.png",
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: Image.asset(
-                        AppImages.google,
-                        width: 30,
-                        height: 30,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Image.asset(
-                        AppImages.facebook,
-                        width: 30,
-                        height: 30,
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Image.asset(
-                        "assets/images/ButtonApple.png",
-                        width: 33,
-                        height: 33,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }
 
 AuthRepositoryContract injectAuthRepositoryContract() {
-  // تأكد من أنك مررت بيانات صحيحة للكائن الخاص بالمصدر البعيد
   return AuthRepositoryImpl(
       remoteDataSource:
           AuthRemoteDataSourceImpl(apiManager: ApiManager.getInstance()));

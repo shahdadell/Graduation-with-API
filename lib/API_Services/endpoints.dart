@@ -7,5 +7,8 @@ class AppEndpoints {
   static const String login = "auth/login.php";
 
   //Home
-   static const String fetchHome = "home.php";
+  static const String fetchHome = "home.php";
+
+  //Services
+  static const String fetchService = "services/services.php";
 }
