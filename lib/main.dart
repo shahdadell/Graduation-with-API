@@ -26,12 +26,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(400, 420),
+      designSize: const Size(400, 420),
       minTextAdapt: true,
       splitScreenMode: true,
       child: MultiBlocProvider(
         providers: [
-          // BlocProvider(create: (context) => AuthBloc()),
           BlocProvider(create: (context) => HomeBloc()),
         ],
         child: MaterialApp(
@@ -41,18 +40,27 @@ class MyApp extends StatelessWidget {
           routes: {
             SplashScreen.routName: (context) => const SplashScreen(),
             HomeScreen.routName: (context) => const HomeScreen(),
-            ServicesScreen.routeName: (context) => ServicesScreen(
-                  categoryId:
-                      ModalRoute.of(context)!.settings.arguments as String,
-                ),
             MainScreen.routName: (context) => const MainScreen(),
             SignInScreen.routName: (context) => const SignInScreen(),
             SignUpScreen.routName: (context) => const SignUpScreen(),
             OtpScreen.routName: (context) => const OtpScreen(),
             ForgetPassword.routName: (context) => const ForgetPassword(),
           },
+          onGenerateRoute: (settings) {
+            if (settings.name == ServicesScreen.routeName) {
+              final args = settings.arguments as Map<String, dynamic>;
+              return MaterialPageRoute(
+                builder: (context) => ServicesScreen(
+                  categoryId: args['categoryId'] as String,
+                  categoryName: args['categoryName'] as String,
+                ),
+              );
+            }
+            return null;
+          },
         ),
       ),
     );
   }
 }
+

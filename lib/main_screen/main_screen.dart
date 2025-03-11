@@ -129,17 +129,17 @@ class MainScreen extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
-                  ElevatedButton(
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       Navigator.of(context)
                           .pushReplacementNamed(HomeScreen.routName);
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0x90f26b0a),
-                      shape: ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                    ),
+                    // style: ElevatedButton.styleFrom(
+                    //   backgroundColor: const Color(0x90f26b0a),
+                    //   shape: ContinuousRectangleBorder(
+                    //     borderRadius: BorderRadius.circular(40),
+                    //   ),
+                    // ),
                     child: Text(
                       textAlign: TextAlign.center,
                       "visiting as a guest",

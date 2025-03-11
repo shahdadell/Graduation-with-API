@@ -167,11 +167,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(
+                              Navigator.push(
                                 context,
-                                ServicesScreen.routeName,
-                                arguments: state.categories[index]
-                                    .categoriesId, // افترضي إن فيه categoriesId في الموديل
+                                MaterialPageRoute(
+                                  builder: (context) => ServicesScreen(
+                                    categoryId: state.categories[index].categoriesId.toString(),
+                                    categoryName: state.categories[index].categoriesName ?? 'Unknown',
+                                  ),
+                                ),
                               );
                             },
                             child: Column(
