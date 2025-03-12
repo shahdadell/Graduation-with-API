@@ -6,6 +6,7 @@ import 'package:graduation_project/Main_Screen/main_screen.dart';
 import 'package:graduation_project/Splash_Screen/splash_screen.dart';
 import 'package:graduation_project/Theme/theme.dart';
 import 'package:graduation_project/API_Services/dio_provider.dart';
+import 'package:graduation_project/home_screen/UI/Items_screen.dart';
 import 'package:graduation_project/home_screen/UI/service_for_category.dart';
 import 'package:graduation_project/home_screen/bloc/home_bloc.dart';
 import 'auth/OTP/otp_screen.dart';
@@ -45,6 +46,14 @@ class MyApp extends StatelessWidget {
             SignUpScreen.routName: (context) => const SignUpScreen(),
             OtpScreen.routName: (context) => const OtpScreen(),
             ForgetPassword.routName: (context) => const ForgetPassword(),
+            ServiceItemsScreen.routeName: (context) {
+              final args = ModalRoute.of(context)!.settings.arguments
+                  as Map<String, dynamic>;
+              return ServiceItemsScreen(
+                serviceId: args['serviceId'],
+                userId: args['userId'],
+              );
+            },
           },
           onGenerateRoute: (settings) {
             if (settings.name == ServicesScreen.routeName) {
@@ -63,4 +72,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

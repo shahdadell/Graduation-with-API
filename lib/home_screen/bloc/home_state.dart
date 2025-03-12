@@ -46,7 +46,19 @@ class FetchServicesSuccessState extends HomeState {
   final List<ServiceModel> services;
   FetchServicesSuccessState({required this.services});
 }
+
 class FetchServicesErrorState extends HomeState {
   final String message;
   FetchServicesErrorState({required this.message});
+}
+class FetchServiceItemsLoadingState extends HomeState {}
+
+class FetchServiceItemsSuccessState extends HomeState {
+  final List<ItemModel> items;
+  FetchServiceItemsSuccessState({required this.items});
+}
+
+class FetchServiceItemsErrorState extends HomeState {
+  final String message;
+  FetchServiceItemsErrorState({required this.message});
 }

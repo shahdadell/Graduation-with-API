@@ -6,18 +6,18 @@ import 'package:graduation_project/auth/sign_up_screen/sign_up_screen.dart';
 
 import 'text_filed_otp_screem.dart';
 
-class OtpScreen extends StatefulWidget {
-  static const String routName = 'otp';
+class OtpScreenForgetPassword extends StatefulWidget {
+  static const String routName = 'otpScreen';
 
-  const OtpScreen({
+  const OtpScreenForgetPassword({
     super.key,
   });
 
   @override
-  State<OtpScreen> createState() => _OtpScreenState();
+  State<OtpScreenForgetPassword> createState() => _OtpScreenForgetPasswordState();
 }
 
-class _OtpScreenState extends State<OtpScreen> {
+class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
   ApiManager apiManager = ApiManager.getInstance();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController otpController1 = TextEditingController();
@@ -163,15 +163,25 @@ class _OtpScreenState extends State<OtpScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
+                print("OTP Continue Button Pressed");
+
                 if (formKey.currentState!.validate()) {
-                  var response = await apiManager.verifyCode(email,
-                      "${otpController1.text}${otpController2.text}${otpController3.text}${otpController4.text}${otpController5.text}");
+                  String otpCode =
+                      "${otpController1.text}${otpController2.text}${otpController3.text}${otpController4.text}${otpController5.text}";
+
+                  print("Entered OTP: $otpCode");
+
+                  var response = await apiManager.verifyCodeForgetPassword(email, otpCode);
+
+                  print("API Response: ${response.status}, Message: ${response.message}");
+
                   if (response.status == "success") {
+                    print("Verification Successful! Navigating to Home...");
                     Navigator.of(context).pushReplacementNamed(HomeScreen.routName);
-                  }else {
-                    print("Failed :=> ${response.message}");
+                  } else {
+                    print("Verification Failed: ${response.message}");
                   }
-                } // otp();
+                }
               },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.all(11),
@@ -180,7 +190,7 @@ class _OtpScreenState extends State<OtpScreen> {
               child: Text(
                 textAlign: TextAlign.center,
                 "Continue",
-                style: Theme.of(context).textTheme.titleSmall,
+                style: Theme.of(context).textTheme.displaySmall,
               ),
             ),
           ],

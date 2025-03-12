@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/home_screen/bloc/home_event.dart';
 import 'package:graduation_project/home_screen/bloc/home_state.dart';
-import 'package:graduation_project/home_screen/data/model/services_model_response/service_model.dart';
+// import 'package:graduation_project/home_screen/data/model/services_model_response/service_model.dart';
 import 'package:graduation_project/home_screen/data/repo/home_repo.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
@@ -10,6 +10,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<FetchCategoriesEvent>(fetchCategories);
     on<FetchDiscountEvent>(fetchDiscountedItems);
     on<FetchServicesEvent>(fetchServicesByCategory);
+    on<FetchServiceItemsEvent>(fetchServiceItems); 
   }
 
   Future<void> fetchHomeData(
@@ -45,15 +46,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(HomeErrorState(message: e.toString()));
     }
   }
-Future<void> fetchServicesByCategory(
-    FetchServicesEvent event, Emitter<HomeState> emit) async {
-  emit(FetchServicesLoadingState());
-  try {
-    final services = await HomeRepo.fetchServicesByCategory(event.categoryId);
-    emit(FetchServicesSuccessState(services: services));
-  } catch (e) {
-    emit(HomeErrorState(message: e.toString()));
-  }
-}
 
+  Future<void> fetchServicesByCategory(
+      FetchServicesEvent event, Emitter<HomeState> emit) async {
+    emit(FetchServicesLoadingState());
+    try {
+      final services = await HomeRepo.fetchServicesByCategory(event.categoryId);
+      emit(FetchServicesSuccessState(services: services));
+    } catch (e) {
+      emit(HomeErrorState(message: e.toString()));
+    }
+  }
+  Future<void> fetchServiceItems(
+      FetchServiceItemsEvent event, Emitter<HomeState> emit) async {
+    emit(FetchServiceItemsLoadingState());
+    try {
+      final items = await HomeRepo.fetchServiceItems(
+        serviceId: event.serviceId,
+        userId: event.userId,
+      );
+      emit(FetchServiceItemsSuccessState(items: items));
+    } catch (e) {
+      emit(FetchServiceItemsErrorState(message: e.toString()));
+    }
+  }
 }

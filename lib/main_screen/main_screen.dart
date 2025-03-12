@@ -110,17 +110,17 @@ class MainScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                       Text(
+                      Text(
                         "Don't have an account? ",
                         textAlign: TextAlign.center,
-                         style: Theme.of(context).textTheme.displaySmall,
+                        style: Theme.of(context).textTheme.displaySmall,
                       ),
                       InkWell(
                         onTap: () {
                           Navigator.of(context)
                               .pushNamed(SignUpScreen.routName);
                         },
-                        child:  Text(
+                        child: Text(
                           " Sign Up",
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodySmall,

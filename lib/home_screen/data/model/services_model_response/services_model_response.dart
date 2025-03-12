@@ -1,4 +1,3 @@
-
 import 'package:graduation_project/home_screen/data/model/services_model_response/service_model.dart';
 
 class ServicesModelResponse {
@@ -21,7 +20,6 @@ class ServicesModelResponse {
         'data': data?.map((e) => e.toJson()).toList(),
       };
 }
-
 
 // import 'ServiceModel.dart';
 

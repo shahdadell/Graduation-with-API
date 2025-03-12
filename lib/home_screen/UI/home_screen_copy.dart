@@ -438,138 +438,138 @@ class _HomeScreenState extends State<HomeScreen> {
 //     );
 //   }
 // }
-  // ListView.builder(
-                          //   scrollDirection: Axis.horizontal,
-                          //   itemCount: state.items.length,
-                          //   itemBuilder: (BuildContext context, int index) {
-                          //     return Container(
-                          //       width: 160,
-                          //       margin: const EdgeInsets.symmetric(horizontal: 8),
-                          //       decoration: BoxDecoration(
-                          //         borderRadius: BorderRadius.circular(12),
-                          //         color: Colors.white,
-                          //         boxShadow: [
-                          //           BoxShadow(
-                          //             color: Colors.grey.withOpacity(0.2),
-                          //             blurRadius: 5,
-                          //             spreadRadius: 2,
-                          //           )
-                          //         ],
-                          //       ),
-                          //       child: Column(
-                          //         crossAxisAlignment: CrossAxisAlignment.start,
-                          //         children: [
-                          //           Stack(
-                          //             children: [
-                          //               ClipRRect(
-                          //                 borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                          //                 child: Image.network(
-                          //                   state.items[index].itemImage ?? '',
-                          //                   height: 100,
-                          //                   width: double.infinity,
-                          //                   fit: BoxFit.cover,
-                          //                   errorBuilder: (context, error, stackTrace) {
-                          //                     return Container(
-                          //                       height: 100,
-                          //                       color: Colors.grey,
-                          //                       child: const Icon(Icons.broken_image, size: 50, color: Colors.white),
-                          //                     );
-                          //                   },
-                          //                 ),
-                          //               ),
-                          //               Positioned(
-                          //                 top: 8,
-                          //                 left: 8,
-                          //                 child: Container(
-                          //                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          //                   decoration: BoxDecoration(
-                          //                     color: Colors.black.withOpacity(0.6),
-                          //                     borderRadius: BorderRadius.circular(8),
-                          //                   ),
-                          //                   child: Text(
-                          //                     "${state.items[index].itemDiscount}% off",
-                          //                     style: const TextStyle(color: Colors.white, fontSize: 12),
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //           Padding(
-                          //             padding: const EdgeInsets.all(8.0),
-                          //             child: Text(
-                          //               state.items[index].itemName ?? 'Unknown',
-                          //               style: textStyle(14, FontWeight.w600, MyTheme.blackColor),
-                          //             ),
-                          //           ),
-                          //         ],
-                          //       ),
-                          //     );
-                          //   },
-                          // ),  // ListView.builder(
-                          //   scrollDirection: Axis.horizontal,
-                          //   itemCount: state.items.length,
-                          //   itemBuilder: (BuildContext context, int index) {
-                          //     return Container(
-                          //       width: 160,
-                          //       margin: const EdgeInsets.symmetric(horizontal: 8),
-                          //       decoration: BoxDecoration(
-                          //         borderRadius: BorderRadius.circular(12),
-                          //         color: Colors.white,
-                          //         boxShadow: [
-                          //           BoxShadow(
-                          //             color: Colors.grey.withOpacity(0.2),
-                          //             blurRadius: 5,
-                          //             spreadRadius: 2,
-                          //           )
-                          //         ],
-                          //       ),
-                          //       child: Column(
-                          //         crossAxisAlignment: CrossAxisAlignment.start,
-                          //         children: [
-                          //           Stack(
-                          //             children: [
-                          //               ClipRRect(
-                          //                 borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                          //                 child: Image.network(
-                          //                   state.items[index].itemImage ?? '',
-                          //                   height: 100,
-                          //                   width: double.infinity,
-                          //                   fit: BoxFit.cover,
-                          //                   errorBuilder: (context, error, stackTrace) {
-                          //                     return Container(
-                          //                       height: 100,
-                          //                       color: Colors.grey,
-                          //                       child: const Icon(Icons.broken_image, size: 50, color: Colors.white),
-                          //                     );
-                          //                   },
-                          //                 ),
-                          //               ),
-                          //               Positioned(
-                          //                 top: 8,
-                          //                 left: 8,
-                          //                 child: Container(
-                          //                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          //                   decoration: BoxDecoration(
-                          //                     color: Colors.black.withOpacity(0.6),
-                          //                     borderRadius: BorderRadius.circular(8),
-                          //                   ),
-                          //                   child: Text(
-                          //                     "${state.items[index].itemDiscount}% off",
-                          //                     style: const TextStyle(color: Colors.white, fontSize: 12),
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //           Padding(
-                          //             padding: const EdgeInsets.all(8.0),
-                          //             child: Text(
-                          //               state.items[index].itemName ?? 'Unknown',
-                          //               style: textStyle(14, FontWeight.w600, MyTheme.blackColor),
-                          //             ),
-                          //           ),
-                          //         ],
-                          //       ),
-                          //     );
-                          //   },
-                          // ),
+// ListView.builder(
+//   scrollDirection: Axis.horizontal,
+//   itemCount: state.items.length,
+//   itemBuilder: (BuildContext context, int index) {
+//     return Container(
+//       width: 160,
+//       margin: const EdgeInsets.symmetric(horizontal: 8),
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(12),
+//         color: Colors.white,
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.grey.withOpacity(0.2),
+//             blurRadius: 5,
+//             spreadRadius: 2,
+//           )
+//         ],
+//       ),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Stack(
+//             children: [
+//               ClipRRect(
+//                 borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+//                 child: Image.network(
+//                   state.items[index].itemImage ?? '',
+//                   height: 100,
+//                   width: double.infinity,
+//                   fit: BoxFit.cover,
+//                   errorBuilder: (context, error, stackTrace) {
+//                     return Container(
+//                       height: 100,
+//                       color: Colors.grey,
+//                       child: const Icon(Icons.broken_image, size: 50, color: Colors.white),
+//                     );
+//                   },
+//                 ),
+//               ),
+//               Positioned(
+//                 top: 8,
+//                 left: 8,
+//                 child: Container(
+//                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+//                   decoration: BoxDecoration(
+//                     color: Colors.black.withOpacity(0.6),
+//                     borderRadius: BorderRadius.circular(8),
+//                   ),
+//                   child: Text(
+//                     "${state.items[index].itemDiscount}% off",
+//                     style: const TextStyle(color: Colors.white, fontSize: 12),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: Text(
+//               state.items[index].itemName ?? 'Unknown',
+//               style: textStyle(14, FontWeight.w600, MyTheme.blackColor),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   },
+// ),  // ListView.builder(
+//   scrollDirection: Axis.horizontal,
+//   itemCount: state.items.length,
+//   itemBuilder: (BuildContext context, int index) {
+//     return Container(
+//       width: 160,
+//       margin: const EdgeInsets.symmetric(horizontal: 8),
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(12),
+//         color: Colors.white,
+//         boxShadow: [
+//           BoxShadow(
+//             color: Colors.grey.withOpacity(0.2),
+//             blurRadius: 5,
+//             spreadRadius: 2,
+//           )
+//         ],
+//       ),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Stack(
+//             children: [
+//               ClipRRect(
+//                 borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+//                 child: Image.network(
+//                   state.items[index].itemImage ?? '',
+//                   height: 100,
+//                   width: double.infinity,
+//                   fit: BoxFit.cover,
+//                   errorBuilder: (context, error, stackTrace) {
+//                     return Container(
+//                       height: 100,
+//                       color: Colors.grey,
+//                       child: const Icon(Icons.broken_image, size: 50, color: Colors.white),
+//                     );
+//                   },
+//                 ),
+//               ),
+//               Positioned(
+//                 top: 8,
+//                 left: 8,
+//                 child: Container(
+//                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+//                   decoration: BoxDecoration(
+//                     color: Colors.black.withOpacity(0.6),
+//                     borderRadius: BorderRadius.circular(8),
+//                   ),
+//                   child: Text(
+//                     "${state.items[index].itemDiscount}% off",
+//                     style: const TextStyle(color: Colors.white, fontSize: 12),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: Text(
+//               state.items[index].itemName ?? 'Unknown',
+//               style: textStyle(14, FontWeight.w600, MyTheme.blackColor),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   },
+// ),

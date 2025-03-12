@@ -69,4 +69,3 @@ class ServiceModel {
         'service_created': serviceCreated,
       };
 }
-

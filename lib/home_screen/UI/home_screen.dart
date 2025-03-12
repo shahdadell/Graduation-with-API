@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(12),
                                       child: Image.network(
-                                        item.itemImage ?? '',
+                                        item.itemsImage ?? '',
                                         width: double.infinity,
                                         fit: BoxFit.cover,
                                         loadingBuilder:
@@ -90,8 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         },
                                       ),
                                     ),
-                                    if (item.itemDiscount != null &&
-                                        item.itemDiscount != "0")
+                                    if (item.itemsDiscount != null &&
+                                        item.itemsDiscount != 0)
                                       Positioned(
                                         bottom: 8,
                                         right: 8,
@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 BorderRadius.circular(8),
                                           ),
                                           child: Text(
-                                            "${item.itemDiscount}% OFF",
+                                            "${item.itemsDiscount}% OFF",
                                             style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 14,
@@ -171,8 +171,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => ServicesScreen(
-                                    categoryId: state.categories[index].categoriesId.toString(),
-                                    categoryName: state.categories[index].categoriesName ?? 'Unknown',
+                                    categoryId: state
+                                        .categories[index].categoriesId
+                                        .toString(),
+                                    categoryName: state
+                                            .categories[index].categoriesName ??
+                                        'Unknown',
                                   ),
                                 ),
                               );
@@ -244,36 +248,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     return const SizedBox.shrink();
                   },
                 ),
-                BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, state) {
-                    if (state is FetchServicesLoadingState) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (state is FetchServicesSuccessState) {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: state.services.length,
-                        itemBuilder: (context, index) {
-                          final service = state.services[index];
-                          return ListTile(
-                            leading: service.serviceImage != null &&
-                                    service.serviceImage!.isNotEmpty
-                                ? Image.network(service.serviceImage!,
-                                    width: 50, height: 50)
-                                : const Icon(Icons
-                                    .image_not_supported), // أيقونة بديلة عند عدم وجود صورة
-                            title: Text(
-                                service.serviceName ?? 'No Name'), // تجنب null
-                            subtitle: Text(service.serviceDescription ??
-                                'No Description'), // تجنب null
-                          );
-                        },
-                      );
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  },
-                ),
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
@@ -323,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 const BorderRadius.vertical(
                                                     top: Radius.circular(12)),
                                             child: Image.network(
-                                              item.itemImage ?? '',
+                                              item.itemsImage ?? '',
                                               height: 120,
                                               width: double.infinity,
                                               fit: BoxFit.cover,
@@ -342,8 +316,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               },
                                             ),
                                           ),
-                                          if (item.itemDiscount != null &&
-                                              item.itemDiscount != "0")
+                                          if (item.itemsDiscount != null &&
+                                              item.itemsDiscount != 0)
                                             Positioned(
                                               top: 8,
                                               left: 0,
@@ -357,7 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   color: Colors.redAccent
                                                       .withOpacity(0.9),
                                                   child: Text(
-                                                    "${item.itemDiscount}% OFF",
+                                                    "${item.itemsDiscount}% OFF",
                                                     style: const TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 12,
@@ -377,7 +351,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              item.itemName ?? 'Unknown',
+                                              item.itemsName ?? 'Unknown',
                                               style: const TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w600,
@@ -392,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Price: ${item.itemPrice ?? 'N/A'} EGP",
+                                                  "Price: ${item.itemsPrice ?? 'N/A'} EGP",
                                                   style: const TextStyle(
                                                       fontSize: 12,
                                                       color: Colors.green,
@@ -406,7 +380,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         color: Colors
                                                             .orangeAccent),
                                                     Text(
-                                                      item.itemRating ?? 'N/A',
+                                                      item.serviceRating
+                                                              ?.toString() ??
+                                                          'N/A', // تحويل serviceRating لـ String
                                                       style: const TextStyle(
                                                           fontSize: 12,
                                                           color:
