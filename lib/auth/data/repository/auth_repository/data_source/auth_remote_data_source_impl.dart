@@ -35,4 +35,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         email, verifyCode);
     return response;
   }
+
+  @override
+  Future<AuthResultEntity> verifyCodeForgetPassword(String email, String verifyCode) async {
+    var response = await apiManager.verifyCodeForgetPassword(
+        email, verifyCode);
+    return response;
+  }
 }

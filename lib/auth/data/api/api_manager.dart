@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:graduation_project/auth/data/model/request/LoginRequest.dart';
+import 'package:graduation_project/auth/data/model/request/OtpForgetPasswordRequest.dart';
 import 'package:graduation_project/auth/data/model/request/OtpRequest.dart';
 import 'package:http/http.dart' as http;
 import '../model/request/CheckEmailRequest.dart';
@@ -45,15 +46,6 @@ class ApiManager {
     return AuthResultEntity.fromJson(jsonDecode(response.body));
   }
 
-  //   Future<AuthResultEntity> checkemail(String email) async {
-  //     //https://abdulrahmanantar.com/outbye/auth/signup.php
-  //     Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.checkemail);
-  //     var requestBody = CheckEmailRequest(
-  //       email: email,
-  //     );
-  //     var response = await http.post(url, body: requestBody.toJson());
-  //     return AuthResultEntity.fromJson(jsonDecode(response.body));
-  //   }
 
   //email forgetPassword
   Future<AuthResultEntity> checkemail(
@@ -76,6 +68,19 @@ class ApiManager {
       email: email,
       verifycode: verifyCode,
     );
+    var response = await http.post(url, body: requestBody.toJson());
+
+    return AuthResultEntity.fromJson(jsonDecode(response.body));
+  }
+
+
+  Future<AuthResultEntity> verifyCodeForgetPassword(String email, String verifycode) async {
+    Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.verifyCodeForgetPassword);
+    var requestBody = OtpScreenForgetPassword(
+      email: email,
+      verifycode: verifycode,
+    );
+    print("🔍 Server Response: $requestBody");
     var response = await http.post(url, body: requestBody.toJson());
 
     return AuthResultEntity.fromJson(jsonDecode(response.body));

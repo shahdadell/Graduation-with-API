@@ -9,8 +9,7 @@ import 'package:graduation_project/auth/data/repository/auth_repository/reposito
 import 'package:graduation_project/auth/domain/repository/repository/auth_repository_contract.dart';
 import 'package:graduation_project/auth/forget_password/cubit/ForgetPassword_ViewModel.dart';
 import 'package:graduation_project/auth/sing_in_screen/text_filed_login.dart';
-
-import '../sing_in_screen/sign_in_screen.dart';
+import 'OTP_Forget_Password/otp_screen.dart';
 import 'cubit/forgetpassword_state.dart';
 
 
@@ -60,53 +59,14 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           DialogUtils.showMessage(context, state.response.message ?? '',
               posActionName: 'Ok', posAction: () {
                 Navigator.of(context).pushReplacementNamed(
-                  OtpScreen.routName,
+                  OtpScreenForgetPassword.routName,
                   arguments: viewmodel.emailController.text,
                 );
               });
         }
       },
-      // listener: (context, state) {
-      //   if (state is ForgetPasswordLoadingState) {
-      //     DialogUtils.showLoading(context, state.forgetpasswordMassage!);
-      //   } else if (state is ForgetPasswordErrorState) {
-      //     DialogUtils.hideLoading(context);
-      //     DialogUtils.showMessage(context, state.forgetpasswordErrorMessage!,
-      //         posActionName: 'Ok');
-      //   } else if (state is ForgetPasswordSuccessState) {
-      //     // DialogUtils.hideLoading(context);
-      //     // DialogUtils.showMessage(context, state.response.message ?? '',
-      //     //     posActionName: 'Ok', posAction: () {
-      //     //
-      //     // });
-      //     Navigator.of(context).pushReplacementNamed(
-      //       OtpScreen.routName,
-      //       arguments: viewmodel.emailController.text,
-      //     );
-      //   }
-      // },
+
       child: Scaffold(
-        // appBar: AppBar(
-        //   leading: InkWell(
-        //     onTap: () {
-        //       Navigator.of(context).pushReplacementNamed(SignInScreen.routName);
-        //     },
-        //     child: Padding(
-        //       padding: const EdgeInsets.all(15),
-        //       child: Icon(
-        //         Icons.arrow_back_ios,
-        //         color: MyTheme.blackColor,
-        //         size: 30,
-        //       ),
-        //     ),
-        //   ),
-        //   centerTitle: true,
-        //   backgroundColor: Colors.transparent,
-        //   title: Text(
-        //     "Sign in",
-        //     style: Theme.of(context).textTheme.titleMedium,
-        //   ),
-        // ),
         body: Form(
           key: viewmodel.formKey, // استخدام formKey من viewmodel
           child: Padding(
@@ -145,7 +105,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   ElevatedButton(
                     onPressed: () {
                       viewmodel.ForgetPassword(
-                          context);
+                          context
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.all(11),

@@ -30,7 +30,6 @@ class RegisterScreenViewmodel extends Cubit<RegisterState> {
         } else {
           emit(
             RegisterSuccessState(response: response),
-
           );
         }
       } catch (e) {

@@ -11,4 +11,7 @@ class AppEndpoints {
 
   //Services
   static const String fetchService = "services/services.php";
+
+  //Items
+  static const String fetchItems = "items/items.php";
 }

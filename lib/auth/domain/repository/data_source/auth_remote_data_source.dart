@@ -7,5 +7,6 @@ abstract class AuthRemoteDataSource {
       String username, String password, String email, String phone);
   Future<AuthResultEntity> login(String username, String password);
   Future<AuthResultEntity> verifyCode(String email, String verifyCode);
+  Future<AuthResultEntity> verifyCodeForgetPassword(String email, String verifyCode);
   Future<AuthResultEntity> checkemail(String email);
 }

@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Home_Screen/UI/home_screen.dart';
 import 'package:graduation_project/Theme/theme.dart';
 import 'package:graduation_project/auth/data/api/api_manager.dart';
+import 'package:graduation_project/auth/forget_password/reserpassword/ResetPassword.dart';
+import 'package:graduation_project/auth/sign_up_screen/sign_up_screen.dart';
+
 import 'text_filed_otp_screem.dart';
 
-class OtpScreen extends StatefulWidget {
-  static const String routName = 'otp';
+class OtpScreenForgetPassword extends StatefulWidget {
+  static const String routName = 'otpScreenf';
 
-  const OtpScreen({super.key});
+  const OtpScreenForgetPassword({
+    super.key,
+  });
 
   @override
-  State<OtpScreen> createState() => _OtpScreenState();
+  State<OtpScreenForgetPassword> createState() =>
+      _OtpScreenForgetPasswordState();
 }
 
-class _OtpScreenState extends State<OtpScreen> {
+class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
   ApiManager apiManager = ApiManager.getInstance();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController otpController1 = TextEditingController();
@@ -189,7 +195,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   print("Entered OTP: $otpCode");
 
                   var response = await apiManager
-                      .verifyCode(email, otpCode);
+                      .verifyCodeForgetPassword(email, otpCode);
 
                   print(
                       "API Response: ${response.status}, Message: ${response.message}");
@@ -198,7 +204,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     print(
                         "Verification Successful! Navigating to Reset Password...");
                     Navigator.of(context)
-                        .pushReplacementNamed(HomeScreen.routName);
+                        .pushReplacementNamed(ResetPassword.routName);
                   } else {
                     print("Verification Failed: ${response.message}");
                   }
@@ -221,3 +227,4 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 }
+

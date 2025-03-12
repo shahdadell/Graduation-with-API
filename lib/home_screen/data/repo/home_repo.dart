@@ -47,31 +47,57 @@ class HomeRepo {
     }
   }
 
-  static Future<List<ServiceModel>> fetchServicesByCategory(int serviceId) async {
+  static Future<List<ServiceModel>> fetchServicesByCategory(
+      int serviceId) async {
+    try {
+      var response = await DioProvider.get(
+        endpoint: "${AppEndpoints.fetchService}?id=$serviceId",
+        headers: {
+          'Authorization': 'Bearer your_token_here', // استبدل التوكن الفعلي
+          'Content-Type': 'application/json',
+        },
+      );
+
+      log('Response Status Code: ${response.statusCode}');
+      log('Response Data: ${response.data}');
+
+      if (response.statusCode == 200 && response.data['status'] == 'success') {
+        List servicesData = response.data['data'];
+
+        /// ✅ تأكد من أنك تستخدم `ServiceModel.fromJson`
+        return servicesData.map((e) => ServiceModel.fromJson(e)).toList();
+      } else {
+        throw Exception('Failed to fetch services');
+      }
+    } catch (e) {
+      log('Exception: $e');
+      throw Exception('Error fetching services');
+    }
+  }
+  static Future<List<ItemModel>> fetchServiceItems({
+  required int serviceId,
+  required int userId,
+}) async {
   try {
     var response = await DioProvider.get(
-      endpoint: "${AppEndpoints.fetchService}?id=$serviceId",
+      endpoint: "${AppEndpoints.fetchItems}?id=$serviceId&userid=$userId",
       headers: {
-        'Authorization': 'Bearer your_token_here', // استبدل التوكن الفعلي
+        'Authorization': 'Bearer your_token_here', // استبدلي التوكن الفعلي
         'Content-Type': 'application/json',
       },
     );
-
     log('Response Status Code: ${response.statusCode}');
     log('Response Data: ${response.data}');
 
     if (response.statusCode == 200 && response.data['status'] == 'success') {
-      List servicesData = response.data['data'];
-      
-      /// ✅ تأكد من أنك تستخدم `ServiceModel.fromJson`
-      return servicesData.map((e) => ServiceModel.fromJson(e)).toList();
+      List itemsData = response.data['data'];
+      return itemsData.map((e) => ItemModel.fromJson(e)).toList();
     } else {
-      throw Exception('Failed to fetch services');
+      throw Exception('Failed to fetch service items');
     }
   } catch (e) {
     log('Exception: $e');
-    throw Exception('Error fetching services');
+    throw Exception('Error fetching service items');
   }
 }
-
 }

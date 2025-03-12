@@ -25,4 +25,10 @@ class AuthRepositoryImpl implements AuthRepositoryContract {
   Future<AuthResultEntity> verifyCode(String email, String verifyCode) {
     return remoteDataSource.verifyCode(email ,verifyCode);
   }
+
+  @override
+  Future<AuthResultEntity> verifyCodeForgetPassword(String email, String verifyCode) {
+    return remoteDataSource.verifyCodeForgetPassword(email, verifyCode);
+  }
+
 }
