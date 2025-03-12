@@ -46,15 +46,6 @@ class ApiManager {
     return AuthResultEntity.fromJson(jsonDecode(response.body));
   }
 
-  //   Future<AuthResultEntity> checkemail(String email) async {
-  //     //https://abdulrahmanantar.com/outbye/auth/signup.php
-  //     Uri url = Uri.https(ApiConstants.baseUrl, ApiConstants.checkemail);
-  //     var requestBody = CheckEmailRequest(
-  //       email: email,
-  //     );
-  //     var response = await http.post(url, body: requestBody.toJson());
-  //     return AuthResultEntity.fromJson(jsonDecode(response.body));
-  //   }
 
   //email forgetPassword
   Future<AuthResultEntity> checkemail(

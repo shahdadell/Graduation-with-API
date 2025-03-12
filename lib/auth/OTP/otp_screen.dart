@@ -2,16 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Home_Screen/UI/home_screen.dart';
 import 'package:graduation_project/Theme/theme.dart';
 import 'package:graduation_project/auth/data/api/api_manager.dart';
-import 'package:graduation_project/auth/sign_up_screen/sign_up_screen.dart';
-
 import 'text_filed_otp_screem.dart';
 
 class OtpScreen extends StatefulWidget {
   static const String routName = 'otp';
 
-  const OtpScreen({
-    super.key,
-  });
+  const OtpScreen({super.key});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -26,6 +22,41 @@ class _OtpScreenState extends State<OtpScreen> {
   final TextEditingController otpController4 = TextEditingController();
   final TextEditingController otpController5 = TextEditingController();
 
+  bool _isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Add listeners to OTP controllers
+    otpController1.addListener(_checkOtpFields);
+    otpController2.addListener(_checkOtpFields);
+    otpController3.addListener(_checkOtpFields);
+    otpController4.addListener(_checkOtpFields);
+    otpController5.addListener(_checkOtpFields);
+  }
+
+  void _checkOtpFields() {
+    // Check if all OTP fields are filled
+    setState(() {
+      _isButtonEnabled = otpController1.text.isNotEmpty &&
+          otpController2.text.isNotEmpty &&
+          otpController3.text.isNotEmpty &&
+          otpController4.text.isNotEmpty &&
+          otpController5.text.isNotEmpty;
+    });
+  }
+
+  @override
+  void dispose() {
+    // Dispose controllers when no longer needed
+    otpController1.dispose();
+    otpController2.dispose();
+    otpController3.dispose();
+    otpController4.dispose();
+    otpController5.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final String email = ModalRoute.of(context)?.settings.arguments as String;
@@ -37,7 +68,7 @@ class _OtpScreenState extends State<OtpScreen> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         title: Text(
-          "Enter Otp ",
+          "Enter Otp",
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
@@ -73,9 +104,6 @@ class _OtpScreenState extends State<OtpScreen> {
                           if (value == null || value.isEmpty) {
                             return "Verification code is required";
                           }
-                          if (value != otpController1.value) {
-                            return "Doesn't Match";
-                          }
                           return null;
                         },
                       ),
@@ -88,9 +116,6 @@ class _OtpScreenState extends State<OtpScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Verification code is required";
-                          }
-                          if (value != otpController2.value) {
-                            return "Doesn't Match";
                           }
                           return null;
                         },
@@ -105,9 +130,6 @@ class _OtpScreenState extends State<OtpScreen> {
                           if (value == null || value.isEmpty) {
                             return "Verification code is required";
                           }
-                          if (value != otpController3.value) {
-                            return "Doesn't Match";
-                          }
                           return null;
                         },
                       ),
@@ -121,9 +143,6 @@ class _OtpScreenState extends State<OtpScreen> {
                           if (value == null || value.isEmpty) {
                             return "Verification code is required";
                           }
-                          if (value != otpController4.value) {
-                            return "Doesn't Match";
-                          }
                           return null;
                         },
                       ),
@@ -136,9 +155,6 @@ class _OtpScreenState extends State<OtpScreen> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Verification code is required";
-                          }
-                          if (value != otpController5.value) {
-                            return "Doesn't Match";
                           }
                           return null;
                         },
@@ -162,17 +178,33 @@ class _OtpScreenState extends State<OtpScreen> {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () async {
+              onPressed: _isButtonEnabled
+                  ? () async {
+                print("OTP Continue Button Pressed");
+
                 if (formKey.currentState!.validate()) {
-                  var response = await apiManager.verifyCode(email,
-                      "${otpController1.text}${otpController2.text}${otpController3.text}${otpController4.text}${otpController5.text}");
+                  String otpCode =
+                      "${otpController1.text}${otpController2.text}${otpController3.text}${otpController4.text}${otpController5.text}";
+
+                  print("Entered OTP: $otpCode");
+
+                  var response = await apiManager
+                      .verifyCode(email, otpCode);
+
+                  print(
+                      "API Response: ${response.status}, Message: ${response.message}");
+
                   if (response.status == "success") {
-                    Navigator.of(context).pushReplacementNamed(HomeScreen.routName);
-                  }else {
-                    print("Failed :=> ${response.message}");
+                    print(
+                        "Verification Successful! Navigating to Reset Password...");
+                    Navigator.of(context)
+                        .pushReplacementNamed(HomeScreen.routName);
+                  } else {
+                    print("Verification Failed: ${response.message}");
                   }
-                } // otp();
-              },
+                }
+              }
+                  : null, // Disable button if _isButtonEnabled is false
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.all(11),
                 backgroundColor: MyTheme.orangeColor,
@@ -180,7 +212,7 @@ class _OtpScreenState extends State<OtpScreen> {
               child: Text(
                 textAlign: TextAlign.center,
                 "Continue",
-                style: Theme.of(context).textTheme.titleSmall,
+                style: Theme.of(context).textTheme.displaySmall,
               ),
             ),
           ],

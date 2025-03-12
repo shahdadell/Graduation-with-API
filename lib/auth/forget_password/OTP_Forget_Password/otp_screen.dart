@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Home_Screen/UI/home_screen.dart';
 import 'package:graduation_project/Theme/theme.dart';
 import 'package:graduation_project/auth/data/api/api_manager.dart';
+import 'package:graduation_project/auth/forget_password/reserpassword/ResetPassword.dart';
 import 'package:graduation_project/auth/sign_up_screen/sign_up_screen.dart';
 
 import 'text_filed_otp_screem.dart';
 
 class OtpScreenForgetPassword extends StatefulWidget {
-  static const String routName = 'otpScreen';
+  static const String routName = 'otpScreenf';
 
   const OtpScreenForgetPassword({
     super.key,
   });
 
   @override
-  State<OtpScreenForgetPassword> createState() => _OtpScreenForgetPasswordState();
+  State<OtpScreenForgetPassword> createState() =>
+      _OtpScreenForgetPasswordState();
 }
 
 class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
@@ -25,6 +27,41 @@ class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
   final TextEditingController otpController3 = TextEditingController();
   final TextEditingController otpController4 = TextEditingController();
   final TextEditingController otpController5 = TextEditingController();
+
+  bool _isButtonEnabled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Add listeners to OTP controllers
+    otpController1.addListener(_checkOtpFields);
+    otpController2.addListener(_checkOtpFields);
+    otpController3.addListener(_checkOtpFields);
+    otpController4.addListener(_checkOtpFields);
+    otpController5.addListener(_checkOtpFields);
+  }
+
+  void _checkOtpFields() {
+    // Check if all OTP fields are filled
+    setState(() {
+      _isButtonEnabled = otpController1.text.isNotEmpty &&
+          otpController2.text.isNotEmpty &&
+          otpController3.text.isNotEmpty &&
+          otpController4.text.isNotEmpty &&
+          otpController5.text.isNotEmpty;
+    });
+  }
+
+  @override
+  void dispose() {
+    // Dispose controllers when no longer needed
+    otpController1.dispose();
+    otpController2.dispose();
+    otpController3.dispose();
+    otpController4.dispose();
+    otpController5.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +74,7 @@ class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         title: Text(
-          "Enter Otp ",
+          "Enter Otp",
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
@@ -73,9 +110,6 @@ class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
                           if (value == null || value.isEmpty) {
                             return "Verification code is required";
                           }
-                          if (value != otpController1.value) {
-                            return "Doesn't Match";
-                          }
                           return null;
                         },
                       ),
@@ -88,9 +122,6 @@ class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Verification code is required";
-                          }
-                          if (value != otpController2.value) {
-                            return "Doesn't Match";
                           }
                           return null;
                         },
@@ -105,9 +136,6 @@ class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
                           if (value == null || value.isEmpty) {
                             return "Verification code is required";
                           }
-                          if (value != otpController3.value) {
-                            return "Doesn't Match";
-                          }
                           return null;
                         },
                       ),
@@ -121,9 +149,6 @@ class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
                           if (value == null || value.isEmpty) {
                             return "Verification code is required";
                           }
-                          if (value != otpController4.value) {
-                            return "Doesn't Match";
-                          }
                           return null;
                         },
                       ),
@@ -136,9 +161,6 @@ class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Verification code is required";
-                          }
-                          if (value != otpController5.value) {
-                            return "Doesn't Match";
                           }
                           return null;
                         },
@@ -162,7 +184,8 @@ class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () async {
+              onPressed: _isButtonEnabled
+                  ? () async {
                 print("OTP Continue Button Pressed");
 
                 if (formKey.currentState!.validate()) {
@@ -171,18 +194,23 @@ class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
 
                   print("Entered OTP: $otpCode");
 
-                  var response = await apiManager.verifyCodeForgetPassword(email, otpCode);
+                  var response = await apiManager
+                      .verifyCodeForgetPassword(email, otpCode);
 
-                  print("API Response: ${response.status}, Message: ${response.message}");
+                  print(
+                      "API Response: ${response.status}, Message: ${response.message}");
 
                   if (response.status == "success") {
-                    print("Verification Successful! Navigating to Home...");
-                    Navigator.of(context).pushReplacementNamed(HomeScreen.routName);
+                    print(
+                        "Verification Successful! Navigating to Reset Password...");
+                    Navigator.of(context)
+                        .pushReplacementNamed(ResetPassword.routName);
                   } else {
                     print("Verification Failed: ${response.message}");
                   }
                 }
-              },
+              }
+                  : null, // Disable button if _isButtonEnabled is false
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.all(11),
                 backgroundColor: MyTheme.orangeColor,
@@ -199,3 +227,4 @@ class _OtpScreenForgetPasswordState extends State<OtpScreenForgetPassword> {
     );
   }
 }
+

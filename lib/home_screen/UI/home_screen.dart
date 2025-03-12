@@ -263,144 +263,141 @@ class _HomeScreenState extends State<HomeScreen> {
                       return const Center(child: CircularProgressIndicator());
                     } else if (state is FetchSuccessHomeDataState) {
                       return SizedBox(
-                          height: 200,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: state.items.length,
-                            itemBuilder: (context, index) {
-                              final item = state.items[index];
-                              return Container(
-                                width: 180,
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      blurRadius: 5,
-                                      spreadRadius: 2,
-                                    )
-                                  ],
-                                ),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.vertical(
-                                                    top: Radius.circular(12)),
-                                            child: Image.network(
-                                              item.itemsImage ?? '',
-                                              height: 120,
-                                              width: double.infinity,
-                                              fit: BoxFit.cover,
-                                              errorBuilder:
-                                                  (context, error, stackTrace) {
-                                                return Container(
-                                                  height: 120,
-                                                  color: Colors.grey[300],
-                                                  child: const Center(
-                                                    child: Icon(
-                                                        Icons.broken_image,
-                                                        size: 50,
-                                                        color: Colors.white),
-                                                  ),
-                                                );
-                                              },
-                                            ),
+                        height: 200,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: state.items.length,
+                          itemBuilder: (context, index) {
+                            final item = state.items[index];
+                            return Container(
+                              width: 180,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    blurRadius: 5,
+                                    spreadRadius: 2,
+                                  )
+                                ],
+                              ),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              const BorderRadius.vertical(
+                                                  top: Radius.circular(12)),
+                                          child: Image.network(
+                                            item.itemsImage ?? '',
+                                            height: 120,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              return Container(
+                                                height: 120,
+                                                color: Colors.grey[300],
+                                                child: const Center(
+                                                  child: Icon(
+                                                      Icons.broken_image,
+                                                      size: 50,
+                                                      color: Colors.white),
+                                                ),
+                                              );
+                                            },
                                           ),
-                                          if (item.itemsDiscount != null &&
-                                              item.itemsDiscount != 0)
-                                            Positioned(
-                                              top: 8,
-                                              left: 0,
-                                              child: ClipPath(
-                                                clipper: RibbonClipper(),
-                                                child: Container(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      vertical: 4,
-                                                      horizontal: 12),
-                                                  color: Colors.redAccent
-                                                      .withOpacity(0.9),
-                                                  child: Text(
-                                                    "${item.itemsDiscount}% OFF",
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
+                                        ),
+                                        if (item.itemsDiscount != null &&
+                                            item.itemsDiscount != 0)
+                                          Positioned(
+                                            top: 8,
+                                            left: 0,
+                                            child: ClipPath(
+                                              clipper: RibbonClipper(),
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 4,
+                                                        horizontal: 12),
+                                                color: Colors.redAccent
+                                                    .withOpacity(0.9),
+                                                child: Text(
+                                                  "${item.itemsDiscount}% OFF",
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                               ),
                                             ),
+                                          ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            item.itemsName ?? 'Unknown',
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.black87),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          const SizedBox(height: 4),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "Price: ${item.itemsPrice ?? 'N/A'} EGP",
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.green,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  const Icon(Icons.star,
+                                                      size: 14,
+                                                      color:
+                                                          Colors.orangeAccent),
+                                                  Text(
+                                                    item.serviceRating
+                                                            ?.toString() ??
+                                                        'N/A', // تحويل serviceRating لـ String
+                                                    style: const TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black54),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ],
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              item.itemsName ?? 'Unknown',
-                                              style: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.black87),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            const SizedBox(height: 4),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "Price: ${item.itemsPrice ?? 'N/A'} EGP",
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.green,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    const Icon(Icons.star,
-                                                        size: 14,
-                                                        color: Colors
-                                                            .orangeAccent),
-                                                    Text(
-                                                      item.serviceRating
-                                                              ?.toString() ??
-                                                          'N/A', // تحويل serviceRating لـ String
-                                                      style: const TextStyle(
-                                                          fontSize: 12,
-                                                          color:
-                                                              Colors.black54),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
-                          ));
+                              ),
+                            );
+                          },
+                        ),
+                      );
                     }
                     return const SizedBox.shrink();
                   },

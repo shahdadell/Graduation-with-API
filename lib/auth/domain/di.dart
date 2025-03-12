@@ -24,7 +24,6 @@ CheckEmailUseCase injectCheckEmailUseCase() {
   return CheckEmailUseCase(repositoryContract: injectAuthRepositoryContract());
 }
 
-
 RegisterUseCase injectRegisterUseCase() {
   return RegisterUseCase(repositoryContract: injectAuthRepositoryContract());
 }
