@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/App_Images/app_images.dart';
-import 'package:graduation_project/Home_Screen/UI/home_screen.dart';
 import 'package:graduation_project/Theme/dialog_utils.dart';
+import 'package:graduation_project/Theme/dialogs.dart';
 import 'package:graduation_project/Theme/theme.dart';
 import 'package:graduation_project/auth/data/api/api_manager.dart';
 import 'package:graduation_project/auth/data/repository/auth_repository/data_source/auth_remote_data_source_impl.dart';
 import 'package:graduation_project/auth/data/repository/auth_repository/repository/auth_repository_impl.dart';
 import 'package:graduation_project/auth/domain/repository/repository/auth_repository_contract.dart';
-import 'package:graduation_project/auth/forget_password/forget_password_bottom_sheet.dart';
-import 'package:graduation_project/auth/sing_in_screen/login_screen_viewmodel.dart';
-import 'package:graduation_project/auth/sing_in_screen/login_state.dart';
+import 'package:graduation_project/auth/forget_password/check_email/forget_password_bottom_sheet.dart';
+import 'package:graduation_project/auth/sing_in_screen/cubit/login_screen_viewmodel.dart';
+import 'package:graduation_project/auth/sing_in_screen/cubit/login_state.dart';
 import 'package:graduation_project/auth/sing_in_screen/text_filed_login.dart';
-
+import 'package:graduation_project/home_screen/UI/Home_Page/home_screen.dart';
+import 'package:graduation_project/local_data/shared_preference.dart';
 import '../../main_screen/main_screen.dart';
-
 
 class SignInScreen extends StatefulWidget {
   static const String routName = 'SignInScreen';
-
   const SignInScreen({super.key});
 
   @override
@@ -29,23 +29,30 @@ class _SignInScreenState extends State<SignInScreen> {
   LoginScreenViewmodel viewmodel = LoginScreenViewmodel(
     repositoryContract: injectAuthRepositoryContract(),
   );
-
   late TextEditingController emailController;
   late TextEditingController passwordController;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  @override
-  void dispose() {
-    super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-  }
 
   @override
   void initState() {
     super.initState();
     emailController = TextEditingController();
     passwordController = TextEditingController();
+    // checkToken(); // نعلق التحقق التلقائي مؤقتًا
+  }
+
+  void checkToken() async {
+    final token = AppLocalStorage.getData('token');
+    if (token != null && token.isNotEmpty) {
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routName);
+    }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -54,17 +61,16 @@ class _SignInScreenState extends State<SignInScreen> {
       bloc: viewmodel,
       listener: (context, state) {
         if (state is LoginLoadingState) {
-          DialogUtils.showLoading(context, state.loadingMassage!);
+          showLoadingDialog(context);
         } else if (state is LoginErrorState) {
-          DialogUtils.hideLoading(context);
-          DialogUtils.showMessage(context, state.errorMessage!,
-              posActionName: 'Ok');
+          if (Navigator.canPop(context)) {
+            Navigator.pop(context);
+          }
+          showAppDialog(context, state.errorMessage!);
         } else if (state is LoginSuccessState) {
-          // DialogUtils.hideLoading(context);
-          // DialogUtils.showMessage(context, state.response.message ?? '',
-          //     posActionName: 'Ok', posAction: () {
-          //
-          // });
+          if (Navigator.canPop(context)) {
+            Navigator.pop(context);
+          }
           Navigator.of(context).pushReplacementNamed(
             HomeScreen.routName,
             arguments: viewmodel.emailController.text,
@@ -78,11 +84,11 @@ class _SignInScreenState extends State<SignInScreen> {
               Navigator.of(context).pushReplacementNamed(MainScreen.routName);
             },
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.all(10.w), // تقليل الـ padding
               child: Icon(
                 Icons.arrow_back_ios,
                 color: MyTheme.blackColor,
-                size: 30,
+                size: 24.w, // تقليل حجم الأيقونة
               ),
             ),
           ),
@@ -90,29 +96,35 @@ class _SignInScreenState extends State<SignInScreen> {
           backgroundColor: Colors.transparent,
           title: Text(
             "Sign in",
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(fontSize: 18.sp), // تقليل حجم العنوان
           ),
         ),
         body: Form(
-          key: viewmodel.formKey, // استخدام formKey من viewmodel
+          key: viewmodel.formKey,
           child: Padding(
-            padding: const EdgeInsets.all(25),
+            padding: EdgeInsets.all(20.w), // تقليل الـ padding الكلي
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Image.asset(
                     AppImages.sign,
-                    width: 170,
-                    height: 170,
+                    width: 140.w, // تقليل حجم الصورة
+                    height: 140.h,
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 15.h), // تقليل المسافة
                   Text(
                     "Email Address",
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontSize: 14.sp), // تقليل حجم النص
                   ),
-                  const SizedBox(height: 5),
+                  SizedBox(height: 4.h), // تقليل المسافة
                   TextFiledLogin(
                     text: 'User name / Email',
                     type: TextInputType.emailAddress,
@@ -124,21 +136,24 @@ class _SignInScreenState extends State<SignInScreen> {
                         return "E-mail is required";
                       }
                       bool emailValid = RegExp(
-                              r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                           .hasMatch(value);
                       if (!emailValid) {
-                        return 'PLease Enter Valid Email';
+                        return 'Please Enter Valid Email';
                       }
                       return null;
                     },
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 15.h), // تقليل المسافة
                   Text(
                     "Password",
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontSize: 14.sp), // تقليل حجم النص
                   ),
-                  const SizedBox(height: 5),
+                  SizedBox(height: 4.h), // تقليل المسافة
                   TextFiledLogin(
                     controller: viewmodel.passwordController,
                     text: 'Password',
@@ -150,13 +165,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       if (value == null || value.isEmpty) {
                         return "Password is required";
                       }
-                      if (value.length < 6) {
-                        return "Password Should Be At Least 6 Chars";
-                      }
                       return null;
                     },
                   ),
-                  const SizedBox(height: 5),
+                  SizedBox(height: 4.h), // تقليل المسافة
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -164,63 +176,71 @@ class _SignInScreenState extends State<SignInScreen> {
                         onTap: () {
                           showForgetPasswordBottomSheet();
                         },
-                        child:  Text(
-                          "Forget Password ?",
+                        child: Text(
+                          "Forget Password?",
                           textAlign: TextAlign.end,
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(fontSize: 12.sp), // تقليل حجم النص
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 15.h), // تقليل المسافة
                   ElevatedButton(
                     onPressed: () {
-                      viewmodel.SignIn(
-                          context); // هنا استدعاء SignIn من viewmodel
+                      viewmodel.SignIn(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(11),
+                      padding: EdgeInsets.symmetric(vertical: 6.h), // تقليل الـ padding
                       backgroundColor: MyTheme.orangeColor,
+                      minimumSize: Size(double.infinity, 35.h), // تقليل ارتفاع الزر
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.r), // زوايا أنيقة
+                      ),
                     ),
                     child: Text(
-                      textAlign: TextAlign.center,
                       "Sign in",
-                      style: Theme.of(context).textTheme.displaySmall,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(fontSize: 13.sp), // تقليل حجم النص
                     ),
                   ),
-                  const SizedBox(height: 50),
-                  const Divider(
-                    indent: 5,
-                    endIndent: 5,
-                  ),
+                  SizedBox(height: 30.h), // تقليل المسافة الكبيرة
+                  Divider(indent: 5.w, endIndent: 5.w),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(15),
+                        padding: EdgeInsets.all(10.w), // تقليل الـ padding
                         child: Text(
                           "or sign in with",
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(fontSize: 12.sp), // تقليل حجم النص
                         ),
                       ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       InkWell(
                         onTap: () {},
                         child: Material(
-                          elevation: 5, // مقدار الظل
-                          borderRadius: BorderRadius.circular(12), // جعل الحواف دائرية
-                          shadowColor: Colors.black.withOpacity(0.3), // لون الظل
+                          elevation: 3, // تقليل الظل لمظهر أنيق
+                          borderRadius: BorderRadius.circular(10.r),
+                          shadowColor: Colors.black.withOpacity(0.2),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12), // تأكد من تطابق الحواف
+                            borderRadius: BorderRadius.circular(10.r),
                             child: Image.asset(
                               AppImages.google,
-                              width: 50,
-                              height: 50,
+                              width: 40.w, // تقليل حجم الأيقونة
+                              height: 40.h,
                             ),
                           ),
                         ),
@@ -235,6 +255,7 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
   }
+
   void showForgetPasswordBottomSheet() {
     showModalBottomSheet(
       context: context,
@@ -246,5 +267,5 @@ class _SignInScreenState extends State<SignInScreen> {
 AuthRepositoryContract injectAuthRepositoryContract() {
   return AuthRepositoryImpl(
       remoteDataSource:
-          AuthRemoteDataSourceImpl(apiManager: ApiManager.getInstance()));
+      AuthRemoteDataSourceImpl(apiManager: ApiManager.getInstance()));
 }

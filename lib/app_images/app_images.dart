@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class AppImages {
   static const String vegetablesimage = 'assets/images/vegetablesimage.png';
   static const String restaurantimg2 = 'assets/images/restaurantimg2.jpeg';
@@ -49,9 +51,10 @@ class AppImages {
   static const String pass = 'assets/images/pass.png';
   static const String tour = 'assets/images/tour.png';
   static const String bbq = 'assets/images/bbq.png';
-  static const String loading = 'assets/mages/loading.json';
+  static const String loading = 'assets/images/loading.json';
   static const String iconHome = 'assets/images/Iconly.png';
   static const String iconOrder = 'assets/images/receipt-item.png';
   static const String iconFavourite = 'assets/images/heart.png';
   static const String iconReward = 'assets/images/gift.png';
+  static const String cart_empty = 'assets/images/cartEmpty.json';
 }
