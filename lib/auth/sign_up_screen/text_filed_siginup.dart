@@ -47,10 +47,7 @@ class _TextFiledSignupState extends State<TextFiledSignup> {
   Widget build(BuildContext context) {
     return TextFormField(
       style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: MyTheme.blackColor
-      ),
+          fontSize: 16, fontWeight: FontWeight.w600, color: MyTheme.blackColor),
       obscureText: widget.password ? isObscured : false,
       validator: widget.validator,
       controller: widget.controller,
@@ -59,7 +56,8 @@ class _TextFiledSignupState extends State<TextFiledSignup> {
       decoration: InputDecoration(
         label: Text(
           widget.text,
-          style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 16),
+          style: const TextStyle(
+              color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 16),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -79,12 +77,12 @@ class _TextFiledSignupState extends State<TextFiledSignup> {
         ),
         suffixIcon: widget.password
             ? IconButton(
-          icon: Icon(
-            isObscured ? Icons.visibility_off : Icons.visibility,
-            color: Colors.grey,
-          ),
-          onPressed: togglePasswordVisibility,
-        )
+                icon: Icon(
+                  isObscured ? Icons.visibility_off : Icons.visibility,
+                  color: Colors.grey,
+                ),
+                onPressed: togglePasswordVisibility,
+              )
             : Icon(widget.icon, color: Colors.grey),
       ),
     );

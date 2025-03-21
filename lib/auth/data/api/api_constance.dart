@@ -5,6 +5,9 @@ class ApiConstants {
   // ignore: constant_identifier_names
   static const String LoginApi = '/outbye/auth/login.php';
   static const String verifyCodeApi = '/outbye/auth/verfiycode.php';
-  static const String verifyCodeForgetPassword = '/outbye/forgetpassword/verifycode.php';
+  static const String verifyCodeForgetPassword =
+      '/outbye/forgetpassword/verifycode.php';
   static const String checkemail = '/outbye/forgetpassword/checkemail.php';
+  static const String resetpassword =
+      '/outbye/forgetpassword/resetpassword.php';
 }

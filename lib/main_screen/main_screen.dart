@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:graduation_project/App_Images/app_images.dart';
 import 'package:graduation_project/Theme/theme.dart';
 import 'package:graduation_project/auth/sign_up_screen/sign_up_screen.dart';
 import 'package:graduation_project/auth/sing_in_screen/sign_in_screen.dart';
-
-import '../Home_Screen/UI/home_screen.dart';
+import 'package:graduation_project/home_screen/UI/Home_Page/home_screen.dart';
 
 class MainScreen extends StatelessWidget {
   static const String routName = 'LoginScreen';
@@ -12,32 +12,31 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var mediaQuery2 = MediaQuery.of(context).size;
     return Stack(
       children: [
         Image.asset(
           AppImages.rectangle,
-          width: mediaQuery2.width,
-          height: mediaQuery2.height,
+          width: ScreenUtil().screenWidth,
+          height: ScreenUtil().screenHeight,
           fit: BoxFit.cover,
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: Center(
             child: Padding(
-              padding: const EdgeInsets.all(25),
+              padding: EdgeInsets.all(25.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Spacer(),
                   SizedBox(
-                    width: 100,
-                    height: 100,
+                    width: 100.w,
+                    height: 100.h,
                     child: Image.asset(
                       AppImages.logo,
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   Image.asset(
                     AppImages.text,
                   ),
@@ -47,73 +46,91 @@ class MainScreen extends StatelessWidget {
                       Navigator.of(context).pushNamed(SignInScreen.routName);
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(11),
+                      padding: EdgeInsets.symmetric(vertical: 8.h), // تقليل الـ padding
                       backgroundColor: MyTheme.orangeColor,
+                      minimumSize: Size(double.infinity, 15.h), // عرض كامل وارتفاع مناسب
                     ),
                     child: Text(
                       textAlign: TextAlign.center,
                       "Sign in",
-                      style: Theme.of(context).textTheme.displayMedium,
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium!
+                          .copyWith(fontSize: 14.sp), // تقليل حجم النص
                     ),
                   ),
+                  SizedBox(height: 10.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 150,
+                        width: 130.w,
                         child: Image.asset(
                           AppImages.divider,
+                          fit: BoxFit.contain,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(15),
+                        padding: EdgeInsets.symmetric(horizontal: 15.w),
                         child: Text(
                           "or",
-                          style: Theme.of(context).textTheme.displaySmall,
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(fontSize: 14.sp),
                         ),
                       ),
                       SizedBox(
-                        width: 150,
+                        width: 130.w,
                         child: Image.asset(
                           AppImages.divider,
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ],
                   ),
+                  SizedBox(height: 10.h),
                   ElevatedButton(
                     onPressed: () {
                       // Navigator.of(context)
                       //     .pushReplacementNamed(HomeScreen.routName);
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(11),
+                      padding: EdgeInsets.symmetric(vertical: 8.h), // تقليل الـ padding
                       backgroundColor: MyTheme.blueColor,
+                      minimumSize: Size(double.infinity, 15.h), // عرض كامل وارتفاع مناسب
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
                           AppImages.google,
-                          width: 30,
-                          height: 30,
+                          width: 20.w, // تقليل حجم الأيقونة
+                          height: 20.h,
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: 8.w), // تقليل المسافة
                         Text(
                           textAlign: TextAlign.center,
                           "Continue with Google",
-                          style: Theme.of(context).textTheme.displaySmall,
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(fontSize: 14.sp), // تقليل حجم النص
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 30.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Don't have an account? ",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.displaySmall,
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall!
+                            .copyWith(fontSize: 14.sp),
                       ),
                       InkWell(
                         onTap: () {
@@ -123,7 +140,10 @@ class MainScreen extends StatelessWidget {
                         child: Text(
                           " Sign Up",
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(fontSize: 14.sp),
                         ),
                       ),
                     ],
@@ -134,16 +154,13 @@ class MainScreen extends StatelessWidget {
                       Navigator.of(context)
                           .pushReplacementNamed(HomeScreen.routName);
                     },
-                    // style: ElevatedButton.styleFrom(
-                    //   backgroundColor: const Color(0x90f26b0a),
-                    //   shape: ContinuousRectangleBorder(
-                    //     borderRadius: BorderRadius.circular(40),
-                    //   ),
-                    // ),
                     child: Text(
                       textAlign: TextAlign.center,
                       "visiting as a guest",
-                      style: Theme.of(context).textTheme.displaySmall,
+                      style: Theme.of(context)
+                          .textTheme
+                          .displaySmall!
+                          .copyWith(fontSize: 14.sp),
                     ),
                   ),
                 ],

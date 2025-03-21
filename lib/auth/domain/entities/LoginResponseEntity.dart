@@ -1,4 +1,4 @@
-import 'package:graduation_project/auth/data/model/response/RegisterResponse.dart';
+import 'AuthResultEntity .dart';
 
 /// status : "success"
 /// message : "none"
@@ -9,11 +9,8 @@ class LoginResponseEntity {
     this.message,
   });
 
-  
   String? status;
   String? message;
-
-  
 
   AuthResultEntity toAuthResultEntity() {
     return AuthResultEntity();

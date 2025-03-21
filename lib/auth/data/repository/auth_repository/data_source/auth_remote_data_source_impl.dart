@@ -1,5 +1,10 @@
 import 'package:graduation_project/auth/data/api/api_manager.dart';
-import 'package:graduation_project/auth/data/model/response/RegisterResponse.dart';
+import 'package:graduation_project/auth/data/model/response/Login/LoginResponse.dart';
+import 'package:graduation_project/auth/data/model/response/OTP/CheckEmailResponse.dart';
+import 'package:graduation_project/auth/data/model/response/Register/registerresponse_new.dart';
+import 'package:graduation_project/auth/data/model/response/Register/VerfiyCodeResponse.dart';
+import 'package:graduation_project/auth/data/model/response/ResetPassword/ResetPasswordResponse.dart';
+import 'package:graduation_project/auth/data/model/response/ResetPassword/VerfiyCodeForgetPasswordResponse.dart';
 import 'package:graduation_project/auth/domain/repository/data_source/auth_remote_data_source.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -8,38 +13,42 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl({required this.apiManager});
 
   @override
-  Future<AuthResultEntity> register(
+  Future<RegisterresponseNew> register(
       String username, String password, String email, String phone) async {
     var response = await apiManager.register(username, password, email, phone);
     return response;
   }
 
   @override
-  Future<AuthResultEntity> login(String email, String password) async {
-    var either = await apiManager.login(password, email);
-    print("Either :=> $either");
-    return either;
-//    throw UnimplementedError();
+  Future<LoginResponse> login(String email, String password) async {
+    var response = await apiManager.login(email, password);
+    print("Response :=> $response");
+    return response;
   }
 
   @override
-  Future<AuthResultEntity> checkemail(String email) async {
+  Future<CheckEmailResponse> checkemail(String email) async {
     var response = await apiManager.checkemail(email);
     return response;
 //    throw UnimplementedError();
   }
 
   @override
-  Future<AuthResultEntity> verifyCode(String email, String verifyCode) async {
-    var response = await apiManager.verifyCode(
-        email, verifyCode);
+  Future<VerfiyCodeResponse> verifyCode(String email, String verifyCode) async {
+    var response = await apiManager.verifyCode(email, verifyCode);
     return response;
   }
 
   @override
-  Future<AuthResultEntity> verifyCodeForgetPassword(String email, String verifyCode) async {
-    var response = await apiManager.verifyCodeForgetPassword(
-        email, verifyCode);
+  Future<VerfiyCodeForgetPasswordResponse> verifyCodeForgetPassword(
+      String email, String verifyCode) async {
+    var response = await apiManager.verifyCodeForgetPassword(email, verifyCode);
+    return response;
+  }
+
+  Future<ResetPasswordResponse> resetPassword(
+      String email, String hashedPassword) async {
+    var response = await apiManager.resetPassword(email, hashedPassword);
     return response;
   }
 }

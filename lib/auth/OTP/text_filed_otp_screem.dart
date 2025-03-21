@@ -6,7 +6,7 @@ class TextFiledOtpScreen extends StatelessWidget {
   String? Function(String?)? validator;
 
   TextFiledOtpScreen(
-      {super.key, required this.controller, required this.validator});
+      {super.key, required this.controller, required this.validator, required InputDecoration decoration});
 
   @override
   Widget build(BuildContext context) {
